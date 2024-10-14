@@ -76,14 +76,15 @@ WSGI_APPLICATION = 'event.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-import os
+# import os
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'defaultdb',
         'USER': 'avnadmin',
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'default_password'),  # Environment variable
+        'PASSWORD': 'AVNS_4TRmazh0obm5cg0siWQ',  # Environment variable
+        # 'PASSWORD': os.environ.get('DB_PASSWORD', 'default_password'),  # Environment variable
         'HOST': 'mysql-8e3e324-event-platform.l.aivencloud.com',
         'PORT': '12410',
     }
