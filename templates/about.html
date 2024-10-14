@@ -1,0 +1,63 @@
+{% extends "base.html" %} {% block body %}
+<div
+  class="px-10 py-16 bg-gradient-to-tr from-purple-800 to-purple-200 lg:p-0 lg:bg-white"
+>
+  <main class="flex flex-col bg-white rounded-xl lg:rounded-none">
+    <div class="flex flex-col">
+      <h1 class="self-center font-black text-5xl text-purple-950 mt-24">
+        ABOUT US
+      </h1>
+    </div>
+
+    <!-- Instructions -->
+    <div
+      class="mt-16 mb-10"
+      style="padding-left: 8%; padding-right: 8%; font-size: 16px"
+    >
+      <p>
+        The Institution of Engineers (India) or IEI is the largest
+        multidisciplinary professional body that encompasses 15 engineering
+        disciplines and gives engineers a global platform for sharing
+        professional interest. IEl has membership strength of above 0.8 million.
+        Established in 1920, with its headquarter at 8 Gokhale Road,
+        Kolkata-700020, IEI has served the engineering fraternity close to a
+        century. During this period of time, IEI has been inextricably linked
+        with the history of modern-day engineering. In 1935, IEl was
+        incorporated by Royal Charter and remains the only professional body in
+        India which has been accorded this honour.Today, its quest for
+        professional excellence has given it a place of pride in almostevery
+        prestigious and relevant organization acrossthe globe. It provides a
+        vastarray of technical, professional and supporting services to the
+        Government, Industries, Academia and the Engineering fraternity,
+        operating through its 125Centres located across the country and 6
+        overseas chapters. Besides, IEl has bilateral agreementswith about 31
+        international bodies andmembership of another 8 internationalbodiesof
+        the developednationsacross the globe. Being recognized as a Scientific
+        and Research Organisation (SIRO) by the Department of Scientific and
+        Industrial Research, Ministry of Science and Technology, Government of
+        India, IEI promotes the cause of research and development by providing
+        Grant-in-Aid supportto undergraduate, post graduate students and PhD
+        Research Scholars of Engineering Institutionsand Universities. IEI holds
+        the International Professional Engineers (lntPE) Register for India
+        under the global International Professional Engineers Alliance (lntPEA).
+        The Institution also awards the Professional Engineers
+        (PE)Certification. I El in collaborationwith Springer regularly
+        publishes peer-reviewed international journal in five series, namely,
+        Series A, Series B, Series C, Series D and Series E covering fifteen
+        engineering disciplines.
+      </p>
+    </div>
+
+    <div class="self-center mb-14">
+      <div
+        class="self-center mt-7 items-center justify-center flex border-2 border-purple-500 shadow-lg bg-purple-500 hover:bg-purple-800 text-white duration-300 cursor-pointer"
+      >
+        <form action="/" method="post">
+          {% csrf_token %}
+          <button class="px-5 py-2" type="submit">Go To Home</button>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+{% endblock %}

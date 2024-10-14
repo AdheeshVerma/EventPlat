@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/main.css">
+    <link rel="shortcut icon" href="/static/icons/icon.png" type="image/x-icon">
+    <!-- this is to be removed later -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    
+
+    <script src="./register.js"></script>
+    
+    <title>Register</title>
+</head>
+
+<body>
+
+
+    <!--Register-->
+
+
+    <main class="flex justify-center mt-16 lg:mt-20">
+        <div class="max-w-md lg:w-1/4 relative flex flex-col p-4 px-12 rounded-md text-black bg-slate-100">
+            <div class="text-2xl text font-bold mb-2 text-gray-900 text-center">
+                <img class="h-24 mb-4 mx-auto" src="/static/images/logo.png" alt="IEI">
+            </div>
+            <div class="text-2xl font-semibold mb-4 text-center text-teal-800">Register
+            </div>
+            <form action="register" method="POST" onsubmit="return confirmPassword() && validateForm()" class="flex flex-col gap-3">
+                    {% csrf_token %}
+                <!-- team name  -->
+                <!-- Enter Team Name  -->
+                <div class="block relative">
+                    <label for="team_name"
+                    class="block text-gray-600 cursor-text text-sm leading-[140%] font-normal mb-2">Team Name</label>
+                    <input name="tname" type="text" id="team_name"
+                        class="rounded border border-gray-200 text-sm w-full font-normal leading-[18px] text-black tracking-[0px] block h-8 m-0 p-[11px] focus:ring-2 ring-offset-2 ring-gray-900 outline-0"
+                        required>
+                </div>
+
+                <!-- password -->
+                <div class="block relative">
+                    <label for="password"
+                        class="block text-gray-600 cursor-text text-sm leading-[140%] font-normal mb-2">Password</label>
+                    <input name="password" type="password" id="password"
+                        class="rounded border border-gray-200 text-sm w-full font-normal leading-[18px] text-black tracking-[0px] block h-8 m-0 p-[11px] focus:ring-2 ring-offset-2 ring-gray-900 outline-0"
+                        required>
+                </div>
+
+                <!-- re enter password  -->
+                <div class="block relative">
+                    <label for="password"
+                        class="block text-gray-600 cursor-text text-sm leading-[140%] font-normal mb-2">Re-Enter Password</label>
+                    <input name="re_password" type="password" id="re_password"
+                        class="rounded border border-gray-200 text-sm w-full font-normal leading-[18px] text-black tracking-[0px] block h-8 m-0 p-[11px] focus:ring-2 ring-offset-2 ring-gray-900 outline-0"
+                        required>
+                </div>
+
+                <!-- Enter Team Name  -->
+                <div class="block relative">
+                    <label for="email"
+                    class="block text-gray-600 cursor-text text-sm leading-[140%] font-normal mb-2">Email</label>
+                    <input name="email" type="text" id="email"
+                        class="rounded border border-gray-200 text-sm w-full font-normal leading-[18px] text-black tracking-[0px] block h-8 m-0 p-[11px] focus:ring-2 ring-offset-2 ring-gray-900 outline-0"
+                        required>
+                </div>
+                
+                <!-- Enter Leader Name  -->
+                <div class="block relative">
+                    <label for="leader_name"
+                        class="block text-gray-600 cursor-text text-sm leading-[140%] font-normal mb-2">Leader Name</label>
+                    <input name="uname" type="text" id="leader_name"
+                        class="rounded border border-gray-200 text-sm w-full font-normal leading-[18px] text-black tracking-[0px] block h-8 m-0 p-[11px] focus:ring-2 ring-offset-2 ring-gray-900 outline-0"
+                        required>
+                </div>
+                <button type="submit"
+                    class="bg-emerald-800 w-max m-auto px-6 py-2 rounded text-white  text-sm font-normal">Submit</button>
+            </form>
+            
+        </div>
+    </main>
+</body>
+
+</html>

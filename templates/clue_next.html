@@ -1,0 +1,30 @@
+{% extends "main.html" %}
+
+{% block title %}
+Next Clues
+{% endblock %}
+
+{% block content %}
+<h1>Your word is: {{ assigned_text }}</h1>
+<form action='next_clue'method="POST">
+    {% csrf_token %}
+    <label for="TCode">Treasure Code</label>
+    <input type="text" id="TCode" placeholder="Enter Treasure Code" oninput="checkCode()">
+    <button type="submit" id="next-btn" disabled>Next</button>
+</form>
+<script>
+    const correctCode = "qwerty"; 
+
+    function checkCode() {
+        const inputCode = document.getElementById('TCode').value;
+        const nextBtn = document.getElementById('next-btn');
+
+        if (inputCode === correctCode) {
+            nextBtn.disabled = false;
+        } else {
+            nextBtn.disabled = true;
+        }
+    }
+</script>
+
+{% endblock %}''

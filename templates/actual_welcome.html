@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+        
+{% block body %}
+        <div class="px-10 py-16 bg-gradient-to-tr from-purple-800 to-purple-200 lg:p-0 lg:bg-white">
+            <main class="flex flex-col bg-white rounded-xl lg:rounded-none">
+                <div class="flex flex-col">
+                    <h1 class="self-center font-black text-5xl text-purple-950 mt-24">Welcome</h1>
+                </div>
+
+                <!-- Instructions -->
+                <div class="mt-16 mb-10">
+                    <ul class="text-sm lg:text-base px-10 lg:px-40 text-justify lg:text-pretty list-disc">
+                        <li class="mt-2">First of all, Only 1 of the team member should registrer and login on this
+                            portal.</li>
+                        <li class="mt-2">All of the teams will be escorted by an IEI member throughout the event.</li>
+                        <li class="mt-2">After Clicking the "Begin" button you will be redirected to a clue page where u
+                            will recieve the
+                            clue for your first destination.</li>
+                        <li class="mt-2">You have to reach the destination towards which the clue points.</li>
+                        <li class="mt-2">On reaching the destination, the Guide with you will confirm if u have reached
+                            the correct place
+                            or not and will provide you with a coding ques.</li>
+                        <li class="mt-2">You have to solve that coding question in your own laptop.</li>
+                        <li class="mt-2 text-base lg:text-xl font-bold">Code editor- VS code</li>
+                        <li class="mt-2 text-base lg:text-xl font-bold ">Programming Languages allowed: PYTHON and C++
+                        </li>
+                        <li class="mt-2">Time of your question solving will be noted and final teams will be selected on
+                            the baises of
+                            that only.</li>
+                        <li class="mt-2">Once you finish the question, the Guide will run test cases on it, and if u
+                            pass, He will enter
+                            a Treasure Code which will guide u to your next clue.</li>
+                    </ul>
+                </div>
+
+                <div class="self-center mb-14">            
+                    <div class="self-center mt-7 items-center justify-center flex border-2 border-purple-500 shadow-lg bg-purple-500 hover:bg-purple-800 text-white duration-300 cursor-pointer">
+                        <form action="next_clue" method="post">
+                            {% csrf_token %}
+                        <button class="px-5 py-2" type="submit">Begin</button>
+                    </form>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+        {% endblock %}

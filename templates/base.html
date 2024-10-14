@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <script src="{% static "welcome.js"%}"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- this is to be removed later -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+</head>
+
+<body class="lg:bg-gradient-to-tr from-purple-800 to-purple-50 lg:p-10 lg:px-16">
+    <div class="bg-white lg:rounded-3xl">
+        <nav class="flex flex-row justify-between h-auto pt-2 px-3">
+            <div>
+                <img class="h-16" src="{%static "images/logo2.png"%}" alt="">
+            </div>
+            <div>
+                <!-- hidden for lg screen size -->
+                <div onclick="toggleDisplay()" class="mt-2 mr-4 active:bg-gray-300  rounded-full p-2 lg:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor"
+                        viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+                    </svg>
+                </div>
+
+                <div>
+                    <ul class="hidden lg:flex font-bold">
+                        <li class="mx-9 mt-5 hover:text-blue-800 cursor-pointer"> <a href="/">Home <span class="sr-only">(current)</span></a></li>
+                        <li class="mx-9 mt-5 hover:text-blue-800 cursor-pointer"><a href="about"> About</a></li>
+                        <li class="mx-9 mt-5 hover:text-blue-800 cursor-pointer">Contact</li>
+{% if request.user.is_authenticated %}
+<li class="mx-9 mt-5 hover:text-blue-800 cursor-pointer"> <a href="logout">Logout</a></li>
+  <li class="mx-9 mt-5 hover:text-blue-800 cursor-pointer"><a href="/">{{request.user.username}}</a></li>
+{% else %}
+                        <li class="mx-9 mt-5 hover:text-blue-800 cursor-pointer"> <a href="register">Register</a></li>
+                        <li class="mx-9 mt-3 hover:text-blue-800 cursor-pointer">
+
+                           <a class="" href="login"> <div style="text-decoration:none; &hover:{ color:white; text-decoration:none} "
+                                class="max-w-32 bg-purple-500 items-center justify-center flex rounded-lg shadow-lg hover:bg-purple-800 text-white hover:text-white duration-300 cursor-pointer active:scale-[0.98]">
+                                <button class="px-5 py-2">Login</button>
+                            </div></a>
+{% endif %}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- menu items for phone  -->
+        <div id="menu_lst" style="display: none;" class="justify-center mt-2 border">
+            <ul class="w-full flex mx-auto flex-col">
+                <li class="mt-1.5 mb-1 font-bold self-center w-auto">Home</li>
+                <hr>
+                <li class="mt-1.5 mb-1.5 font-bold self-center w-auto">About</li>
+                <hr>
+                <li class="mt-1.5 mb-1 font-bold self-center w-auto">Contact</li>
+                <hr>
+                <li class="mt-1.5 mb-1 font-bold self-center w-auto">   <a class="" href="login">Login</a></li>
+            </ul>
+        </div>
+        <hr>
+{% block body %}{% endblock %}
+       
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+
+</html>

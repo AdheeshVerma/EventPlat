@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}Clues{% endblock %}
+{% block body %}
+
+
+<div class="px-10 py-16 bg-gradient-to-tr from-purple-800 to-purple-200 lg:p-0 lg:bg-white">
+    <main class="h-[75] flex flex-col bg-white rounded-xl lg:rounded-none">
+
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+            <strong>Message: </strong>{{message}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% endfor %}
+        <!-- clues will go here -->
+        <div class="flex h-[76vh] flex-col overflow-x-scroll p-5">
+            <div class="self-center mt-24 flex flex-row">
+                <h1 class="text-2xl lg:text-4xl font-black text-purple-950">Your word is: {{ assigned_text }}</h1>
+                
+            </div>
+            <form action='next_clue'method="POST"> 
+                {% csrf_token %}
+            <div style="display:flex;align-items: center; justify-content:center; flex-direction: column; padding:5%;"> <br><br>
+                {% comment %} <label for="TCode">Treasure Code</label>  {% endcomment %}
+                <input class="rounded-full border border-purple-800 px-3 py-2 placeholder:text-purple-800" type="text" id="getter" name="TCode" placeholder="Enter Treasure Code">
+                <button class="px-5 py-2" type="submit" id="next-btn">Continue</button>
+           
+            </div> 
+        </form> 
+           <!-- <div class="self-center mb-14">
+                 
+                    
+                    <div class="self-center mt-32 border border-purple-800 rounded-full " style="display:none;">
+                         {% comment %} <label for="TCode">Treasure Code</label>  {% endcomment %}
+                        <input class="rounded-full border border-purple-800 px-3 py-2 placeholder:text-purple-800" type="text" id="TCode" name="TCode" placeholder="Enter Treasure Code" oninput="checkCode()">
+                    </div>
+                <div class="self-center mt-14 items-center justify-center flex border-2 border-purple-500 shadow-lg bg-purple-500 hover:bg-purple-800 text-white duration-300 cursor-pointer">
+                </div>
+            </div>-->
+        
+        </div>
+
+
+    </main>
+</div>
+
+
+{% comment %} <div class="mainbox" >
+<div class="flex flex-col">
+    <h1 class="self-center font-black text-5xl text-purple-950 mt-24">Your word is: {{ assigned_text }}</h1>
+</div>
+<br>
+<div class="code">
+<form action='next_clue'method="POST">
+    {% csrf_token %}
+    <label for="TCode">Treasure Code</label>
+    <input type="text" id="TCode" placeholder="Enter Treasure Code" oninput="checkCode()">
+    <button type="submit" id="next-btn" disabled>Next</button>
+</form>
+</div>
+</div> {% endcomment %}
+<script>
+
+    // Disable F5 key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'F5' || (event.ctrlKey && event.key === 'r')) {
+            event.preventDefault();
+            alert("Page refresh is disabled.");
+        }
+    });
+
+    // Disable right-click "Refresh"
+    window.onbeforeunload = function() {
+        return "Page refresh is disabled.";
+    };
+
+    const tryy = document.getElementById("getter").innerText;
+    document.getElementById("TCode").innerHTML=`<input class="rounded-full border border-purple-800 px-3 py-2 placeholder:text-purple-800" type="text" id="TCode" name="TCode" value=${tryy} placeholder="Enter Treasure Code" oninput="checkCode()">`;
+    console.log(`tryy ${tryy} ;`)
+    
+    function checkCode() {
+        const correctCode = "qwerty"; 
+        const inputCode = document.getElementById('TCode').value;
+        const nextBtn = document.getElementById('next-btn');
+        console.log(inputCode, nextBtn)
+        if (inputCode === correctCode) {
+            // nextBtn.disabled = false;
+        } else {
+            //nextBtn.disabled = true;
+            nextBtn.addEventListener('mouseenter', function() {
+                console.log("fnaufa")
+            });
+    
+            nextBtn.addEventListener('mouseleave', function() {
+                console.log("fnaufa")
+            });
+        } 
+    }
+</script>
+{% endblock %}

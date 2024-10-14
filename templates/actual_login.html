@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/main.css">
+    <link rel="shortcut icon" href="{% static "icons/icon.png" %}" type="image/x-icon">
+    <!-- this is to be removed later -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    
+
+    <script src="{% static "welcome.js" %}"></script>
+    
+    <title>Login</title>
+</head>
+
+<body>
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        <strong>Message: </strong>{{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+{% endif %}
+
+    <!--Login-->
+
+
+    <main class="flex justify-center mt-16 lg:mt-20">
+        <div class="max-w-md lg:w-1/4 relative flex flex-col p-4 px-12 rounded-md text-black bg-slate-100">
+            <div class="text-2xl text font-bold mb-2 text-gray-900 text-center">
+                <img class="h-24 mb-4 mx-auto" src="{% static '/images/logo.png' %}" alt="IEI">
+            </div>
+            <div class="text-2xl font-semibold mb-4 text-center text-teal-800">Login
+            </div>
+            {% comment %} <form action="login" method="POST" class="flex flex-col gap-3">
+                {% csrf_token %}
+                <!-- Enter Email  -->
+                <div class="block relative">
+                    <label for="email"
+                    class="block text-gray-600 cursor-text text-sm leading-[140%] font-normal mb-2">Email</label>
+                    <input name="email" type="text" id="email"
+                        class="rounded border border-gray-200 text-sm w-full font-normal leading-[18px] text-black tracking-[0px] block h-8 m-0 p-[11px] focus:ring-2 ring-offset-2 ring-gray-900 outline-0"
+                        required>
+                </div>
+                <!-- password -->
+                <div class="block relative">
+                    <label for="password"
+                        class="block text-gray-600 cursor-text text-sm leading-[140%] font-normal mb-2">Password</label>
+                    <input name="password" type="text" id="password"
+                        class="rounded border border-gray-200 text-sm w-full font-normal leading-[18px] text-black tracking-[0px] block h-8 m-0 p-[11px] focus:ring-2 ring-offset-2 ring-gray-900 outline-0"
+                        required>
+                </div> {% endcomment %}
+                
+                <form class="flex flex-col gap-3" method = 'POST' action='login'> 
+                    {% csrf_token %}
+                        <div class="form-row">
+                            <div class="block relative">
+                                <label for="inputAddress2" class="block text-gray-600 cursor-text text-sm leading-[140%] font-normal mb-2">Email</label>
+                                <input type="text" class="rounded border border-gray-200 text-sm w-full font-normal leading-[18px] text-black tracking-[0px] block h-8 m-0 p-[11px] focus:ring-2 ring-offset-2 ring-gray-900 outline-0"
+                        required id="inputAddress2" placeholder="Leader Name" name="email">
+                              </div> <br>
+                          <div class="block relative">
+                            <label for="password" class="block text-gray-600 cursor-text text-sm leading-[140%] font-normal mb-2">Password</label>
+                            <input type="password" class="rounded border border-gray-200 text-sm w-full font-normal leading-[18px] text-black tracking-[0px] block h-8 m-0 p-[11px] focus:ring-2 ring-offset-2 ring-gray-900 outline-0"
+                        required id="Password" placeholder="Password" name="password">
+                          </div>
+                        </div>
+                        <button type="submit" class="bg-emerald-800 w-max m-auto px-6 py-2 rounded text-white  text-sm font-normal">Login</button>
+                  </form>
+
+            
+        </div>
+    </main>
+</body>
+
+</html>

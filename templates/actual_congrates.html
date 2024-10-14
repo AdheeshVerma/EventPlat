@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Congratulations</title>
+    <!-- this is to be removed later -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+</head>
+
+<body class="lg:bg-gradient-to-tr from-purple-800 to-purple-50 lg:p-10 lg:px-16">
+    <div class="bg-white lg:rounded-3xl">
+        <nav class="flex flex-row justify-between h-auto pt-2 px-3">
+            <div>
+                <img class="h-16 lg:ml-12 opacity-75 invert" src="/static/images/treasure.png" alt="">
+            </div>
+            <div>
+                <!-- hidden for lg screen size -->
+                <div onclick="toggleDisplay()" class="mt-2 mr-4 active:bg-gray-300  rounded-full p-2 lg:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor"
+                        viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+                    </svg>
+                </div>
+
+                <div>
+                    <ul class="hidden lg:flex font-bold">
+                        <li class="mx-9 mt-5 hover:text-blue-800 cursor-pointer">Home</li>
+                        <li class="mx-9 mt-5 hover:text-blue-800 cursor-pointer">About</li>
+                        <li class="mx-9 mt-5 hover:text-blue-800 cursor-pointer">Contact</li>
+                        <li class="mx-9 mt-3 hover:text-blue-800 cursor-pointer">
+
+                            <div
+                                class="max-w-32 bg-purple-500 items-center justify-center flex rounded-lg shadow-lg hover:bg-purple-800 text-white hover:text-white duration-300 cursor-pointer active:scale-[0.98]">
+                                <button class="px-5 py-2"><a class="" href="login">Login</a></button>
+                            </div>
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- menu items for phone  -->
+        <div id="menu_lst" style="display: none;" class="justify-center mt-2 border">
+            <ul class="w-full flex mx-auto flex-col">
+                <li class="mt-1.5 mb-1 font-bold self-center w-auto">Home</li>
+                <hr>
+                <li class="mt-1.5 mb-1.5 font-bold self-center w-auto">About</li>
+                <hr>
+                <li class="mt-1.5 mb-1 font-bold self-center w-auto">Contact</li>
+                <hr>
+                <li class="mt-1.5 mb-1 font-bold self-center w-auto">Login</li>
+            </ul>
+        </div>
+        <hr>
+
+        <div class="px-10 py-16 bg-gradient-to-tr from-purple-800 to-purple-200 lg:p-0 lg:bg-white">
+            <main class="h-[75] flex flex-col bg-gray-200 rounded-xl lg:rounded-none">
+
+
+                <!-- clues will go here -->
+                <div style="background-image: url("{% static 'images/congratulations2.jpeg' %};");" class="flex h-[76vh] bg-contain bg-no-repeat bg-center flex-col overflow-x-scroll p-5">
+                    <!-- <img class="bg-center self-center align-middle mt-16 lg:h-96" src="/static/images/3.jpg" alt=""> -->
+                </div>
+
+
+            </main>
+        </div>
+    </div>
+</body>
+
+</html>

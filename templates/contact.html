@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+        
+{% block body %}
+        <div class="px-10 py-16 bg-gradient-to-tr from-purple-800 to-purple-200 lg:p-0 lg:bg-white">
+            <main class="flex flex-col bg-white rounded-xl lg:rounded-none">
+                <div class="flex flex-col">
+                    <h1 class="self-center font-black text-5xl text-purple-950 mt-24">Contact Us</h1>
+                </div>
+
+                <!-- Instructions -->
+                <div class="mt-16 mb-10">
+                    <ul class="text-sm lg:text-base px-10 lg:px-40 text-justify lg:text-pretty list-disc" style="font-size:18px">
+                        <li class="mt-2"><b>Dr: Rajeev Chauhan: +91 94681 82278 </b></li>
+                        <li class="mt-2"><b>Ankit</b> [President]: +91 74042 75490</li>
+                        <li class="mt-2"><b>Nikita</b> [Vice President]: +91 90533 92298</li>
+                        <li class="mt-2"><b>Nikhil</b> [Tech Head]: +91 8708175875</li>
+                    </ul>
+                </div>
+
+                <div class="self-center mb-14">            
+                    <div class="self-center mt-7 items-center justify-center flex border-2 border-purple-500 shadow-lg bg-purple-500 hover:bg-purple-800 text-white duration-300 cursor-pointer">
+                        <form action="/" method="post">
+                            {% csrf_token %}
+                        <button class="px-5 py-2" type="submit">Go to Home</button>
+                    </form>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+        {% endblock %}
