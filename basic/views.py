@@ -213,5 +213,8 @@ def next_clue(request):
 
 def completion(request):
     global points
+    profile, created = Profile.objects.get_or_create(user=request.user)
     points+=1
+    profile.clue_solved=points
+    profile.save()
     return render(request, 'completed.html')
