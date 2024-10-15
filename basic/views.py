@@ -18,7 +18,7 @@ def about(request):
     return render(request,'about.html')
 
 def contact(request):
-    return render(request,'contactc.html')
+    return render(request,'contact.html')
 
 
 def register(request):
