@@ -29,11 +29,13 @@
            
             </div> 
         </form> 
+        <div style="display:flex; justify-content:center; align-content:center;">
         <form method="POST">
-    {% csrf_token %}
-    <input type="hidden" name="skip" value="true">
-    <button type="submit">Skip Clue</button>
-</form>
+            {% csrf_token %}
+            <input type="hidden" name="skip" value="true">
+            <button type="submit">Skip Clue</button>
+        </form>
+        </div>
            <!-- <div class="self-center mb-14">
                  
                     
