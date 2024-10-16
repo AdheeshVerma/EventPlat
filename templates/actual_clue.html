@@ -29,6 +29,11 @@
            
             </div> 
         </form> 
+        <form method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="skip" value="true">
+    <button type="submit">Skip Clue</button>
+</form>
            <!-- <div class="self-center mb-14">
                  
                     

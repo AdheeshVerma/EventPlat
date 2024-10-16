@@ -120,13 +120,37 @@ def shuffle_text_lists():
 def next_clue(request):
     user = request.user
     global points
-    # Increment points
-    # global points
-    # Check if the user already has an assigned clue that hasn't been marked as 'used'
     active_assignment = UserTextAssignment.objects.filter(user=user, used=False).first()
-    # active_assignment = UserTextAssignment.objects.filter(user=user, used=False).first()
-    
+
     if request.method == 'POST':
+        # Handle Skip Clue
+        if request.POST.get('skip') == 'true':
+            # Mark the current assignment as used
+            if active_assignment:
+                active_assignment.used = True
+                active_assignment.save()
+
+            # Now assign the next clue
+            used_lists = UserTextAssignment.objects.filter(user=user, used=True)
+            used_list_ids = [list_item.assigned_list for list_item in used_lists]
+
+            available_lists = [lst for lst in main_list if lst not in used_list_ids]
+            if not available_lists:
+                # No more lists available
+                return render(request, 'completed.html')
+
+            # Shuffle and assign the next clue
+            shuffled_list = random.choice(available_lists)
+            random.shuffle(shuffled_list)
+            assigned_value = shuffled_list[0]
+
+            # Save the new assignment in the database
+            new_assignment = UserTextAssignment(user=user, assigned_list=shuffled_list, assigned_text=assigned_value, used=False)
+            new_assignment.save()
+
+            return render(request, 'actual_clue.html', {'assigned_text': assigned_value})
+
+        # Handle normal treasure code submission
         treasure_code = request.POST.get('TCode')
         print("tcode",treasure_code)
         correct_code = 'qwerty'  # Replace with your correct treasure code
@@ -142,7 +166,6 @@ def next_clue(request):
             used_lists = UserTextAssignment.objects.filter(user=user, used=True)
             used_list_ids = [list_item.assigned_list for list_item in used_lists]
 
-            print("used list id",used_list_ids)
             available_lists = [lst for lst in main_list if lst not in used_list_ids]
             if not available_lists:
                 # No more lists available
@@ -157,34 +180,25 @@ def next_clue(request):
             new_assignment = UserTextAssignment(user=user, assigned_list=shuffled_list, assigned_text=assigned_value, used=False)
             new_assignment.save()
 
-            
-            
             points += 1
-
             profile, created = Profile.objects.get_or_create(user=request.user)
-
-            
-            # pt = Profile(user = user,clue_solved= points)
-            profile.clue_solved=points
+            profile.clue_solved = points
             profile.save()
-            
-            print(points)
 
-            if points>10:
+            if points > 10:
                 profile = Profile.objects.get(user=request.user)
                 profile.clue_solved = 0
                 profile.save()
-            # main_list[0][1].remove(assigned_value)
+
             return render(request, 'actual_clue.html', {'assigned_text': assigned_value})
         elif treasure_code is not None:
             # Incorrect code, show error and reload the same clue
             if active_assignment:
-                messages.error(request, 'Incorrect Treasure Code') 
+                messages.error(request, 'Incorrect Treasure Code')
                 return render(request, 'actual_clue.html', {'assigned_text': active_assignment.assigned_text})
             else:
-                # Handle case where no active assignment exists but an incorrect code was submitted
                 messages.error(request, 'No active clue. Please try again.')
-                return redirect('next_clue')  # Replace 'clue_start' with your starting clue URL
+                return redirect('next_clue')
 
     # If there's already an active assignment, display the same clue
     if active_assignment:
@@ -197,8 +211,6 @@ def next_clue(request):
     available_lists = [lst for lst in main_list if lst not in used_list_ids]
     if not available_lists:
         return redirect('completion')
-        # points+=1
-        # return render(request, 'actual_congrates.html')
 
     # Shuffle and assign the first clue
     shuffled_list = random.choice(available_lists)
@@ -210,6 +222,7 @@ def next_clue(request):
     new_assignment.save()
 
     return render(request, 'actual_clue.html', {'assigned_text': assigned_value})
+
 
 def completion(request):
     global points
