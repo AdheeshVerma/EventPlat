@@ -23,14 +23,14 @@
             </div>
             <form action='next_clue'method="POST"> 
                 {% csrf_token %}
-            <div style="display:flex;align-items: center; justify-content:center; flex-direction: column; padding:5%;"> <br>
+            <div style="display:flex;align-items: center; justify-content:center; flex-direction: column; padding:5%;"> <br><br>
                 {% comment %} <label for="TCode">Treasure Code</label>  {% endcomment %}
                 <input type="password" class="rounded-full border border-purple-800 px-3 py-2 placeholder:text-purple-800" type="text" id="getter" name="TCode" placeholder="Enter Treasure Code">
                 <button class="px-5 py-2" type="submit" id="next-btn">Continue</button>
            
             </div> 
         </form> 
-            <br><br><br>
+            <br><br>
         <div style="display:flex; justify-content:center; align-content:center;">
         <form method="POST">
             {% csrf_token %}
