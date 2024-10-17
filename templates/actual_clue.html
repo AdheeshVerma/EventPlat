@@ -16,24 +16,27 @@
           {% endfor %}
         <!-- clues will go here -->
         <div class="flex h-[76vh] flex-col overflow-x-scroll p-5">
-            <div class="self-center mt-24 flex flex-row">
-                <h1 class="text-2xl lg:text-4xl font-black text-purple-950">Your word is: {{ assigned_text }}</h1>
+            <div class="self-center mt-2 flex flex-row" style="text-align:center;">
+                <h1 class="text-2xl lg:text-4xl font-normal.
+                text-purple-950"  style="line-height:150%;">{{ assigned_text }}</h1>
                 
             </div>
             <form action='next_clue'method="POST"> 
                 {% csrf_token %}
             <div style="display:flex;align-items: center; justify-content:center; flex-direction: column; padding:5%;"> <br><br>
                 {% comment %} <label for="TCode">Treasure Code</label>  {% endcomment %}
-                <input class="rounded-full border border-purple-800 px-3 py-2 placeholder:text-purple-800" type="text" id="getter" name="TCode" placeholder="Enter Treasure Code">
+                <input type="password" class="rounded-full border border-purple-800 px-3 py-2 placeholder:text-purple-800" type="text" id="getter" name="TCode" placeholder="Enter Treasure Code">
                 <button class="px-5 py-2" type="submit" id="next-btn">Continue</button>
            
             </div> 
         </form> 
+        <div style="display:flex; justify-content:center; align-content:center;">
         <form method="POST">
-    {% csrf_token %}
-    <input type="hidden" name="skip" value="true">
-    <button type="submit">Skip Clue</button>
-</form>
+            {% csrf_token %}
+            <input type="hidden" name="skip" value="true">
+            <button type="submit">Skip Clue</button>
+        </form>
+        </div>
            <!-- <div class="self-center mb-14">
                  
                     
