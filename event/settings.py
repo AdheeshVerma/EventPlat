@@ -26,8 +26,8 @@ SECRET_KEY = 'django-insecure-ar+ixm#u&16(cl-!0%q^w@n3!2$&7_$%_ls@e5fypwb88=#pe+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-# ALLOWED_HOSTS = ["eventplat.onrender.com"]
+#ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["eventplat.onrender.com"]
 # ALLOWED_HOSTS = ["platform-x0z9.onrender.com"]
 CSRF_TRUSTED_ORIGINS = ['https://eventplat.onrender.com']
 
