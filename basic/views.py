@@ -28,7 +28,6 @@ def register(request):
     if request.method=='POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
-        print(password)
         Team_name = request.POST.get('tname')
         username = request.POST.get('uname')
 
@@ -41,7 +40,7 @@ def register(request):
             return redirect('register')
         
         else:
-            user = User(email = email,password = password,username=username,first_name = Team_name)
+            user = User(email = username,password = password,username=email,first_name = Team_name)
             user.set_password(password)
             user.save()
             # subject = "About Regestration"
@@ -199,26 +198,69 @@ main_list = [
 
     """I can be grounded or airborne, but I am not a bird.
     I rely on technology yet I am often preffered. I have wings but cant fly alone, I have a body but dont wear clothes.
-    Finding me is your next fask folks!"""]
+    Finding me is your next task folks!"""],
+
+    #Tree House(Sculpture)
+    ["""Buds और blossoms के बीच में, एक lovely nook,
+    जहाँ चाय की खुशबू से खिलता है हर look.
+    Nature की lap में, मिलती है peace,
+    What am I, जो लाए हर चेहरे पर ease?"""],
+
+    #Newton 
+    ["""Calculus का मैंने किया था development,
+    हर problem का मैंने खोजा था unique solution
+    जहाँ mathematics और science मिलते हैं, वह है स्थान,
+    Find me there, जहाँ होती है knowledge की पहचान""",
+
+    """In a world of calculus, my methods came to light defining the derivative and integral's might. With a prism, I dissected the sun's ray, showing that colours blend in a beautifull array. Find my block and your next clue unlocks."""],
+
+    #Library 
+    ["""Within my walls, imagination उड़ान भरती है,
+    classics और moderns से, मैं readers का true delight हूँ
+    ऊँचाई और गहराई में, in every nook and cranny,
+    मैं क्या हूँ, जहाँ stories हैं truly अद्भुत और uncanny?""",
+
+    """I house countless voices l, yet I speak no word, from fiction to history my silence is heard.
+        In rows I stand both tall and wide filled with words that teach and guide.
+        You borrow my treasures but return them with care, what I provide is knowledge rare. What am I?"""],
+
+    #Edison 
+    ["""Darkness को किया मैंने दूर, लाया एक नई morning,
+    मेरे inventions से हर घर में आया brightness का glow
+    Audio और visuals का magic है truly amazing,
+    मुझे खोजो वहाँ, जहाँ creativity का है stunning नज़ारा""",
+
+    """I illuminated the darkness with a brilliant glow, transforming the night with my electric flow. I Faced many failures yet persistence was the key. Find my block, who am I who dared to dream free. """],
+
+    #Chitkara woods 
+    ["""Sun के नीचे या stars shining bright, Green oasis में, laughter गूंजता है,
+        Late-night talks और gatherings में होता है magic
+        Surroundings में nature और intellect का होता है clash,
+        Gatherings और discussions का है यहाँ एक dash
+        What am I ??""",
+
+    """A canopy of colour above, a tunnel of wonder, a labour of love. Through me the sun's rays filter bright, A dappled glow a wondrous sight. A leafy  arch a natural gate, What are you waiting for? Find me mate!"""],
 ]
-# main_list = [
+# main_list0 = [
 #     ["1 1", "1 2", "1 3"], 
 #     ["2 1", "2 2", "2 3"], 
 #     ["3 1", "3 2", "3 3"], 
-# #    { "chandigarh":["4 1", "4 2", "4 3"]},
 #     ["4 1", "4 2", "4 3"],
 #     ["5 1", "5 2", "5 3"], 
 #     ["6 1", "6 2", "6 3"], 
 #     ["7 1", "7 2", "7 3"], 
 #     ["8 1", "8 2", "8 3"], 
 #     ["9 1", "9 2", "9 3"], 
-#     ["10 1", "10 2", "10 3"]
+#     ["10 1", "10 2", "10 3"],
+#     ["11 1", "11 2", "11 3"],
+#     ["12 1", "12 2", "12 3"],
+#     ["13 1", "13 2", "13 3"],
+#     ["14 1", "14 2", "14 3"],
+#     ["15 1", "15 2", "15 3"],
 # ]
 
 points= 0
 
-user_clue = ""
-print("test")
 
 def shuffle_text_lists():
     random.shuffle(main_list)
@@ -226,121 +268,94 @@ def shuffle_text_lists():
 
 
 # ============================= trying next button===========================
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+import random
+
+
+correct_code = 'Techiei#18Oct'  # Define the correct treasure code
+count = 0  # Keep track of how many clues the user has seen
+
 @login_required(login_url='login')
 def next_clue(request):
     user = request.user
     global points
-    active_assignment = UserTextAssignment.objects.filter(user=user, used=False).first()
+    global count
+
+    # Initialize session if not already present
+    if 'assigned_sublists' not in request.session:
+        request.session['assigned_sublists'] = []
+
+    # If no current clue is saved in the session, generate a new one
+    if 'current_clue' not in request.session:
+        # Filter out sublists that have already been assigned
+        available_sublists = [sublst for sublst in main_list if sublst not in request.session['assigned_sublists']]
+
+        # Check if there are available sublists
+        if available_sublists:
+            # Choose a sublist randomly and add it to the session
+            selected_sublist = random.choice(available_sublists)
+            request.session['assigned_sublists'].append(selected_sublist)
+            request.session.modified = True
+
+            # Choose a random element from the selected sublist
+            random_element = random.choice(selected_sublist)
+            request.session['current_clue'] = random_element  # Save the current clue in the session
+        else:
+            # If no more clues are available, end the game
+            return render(request, 'actual_clue.html', {'assigned_text': "No more clues available!"})
+
+    else:
+        # Retrieve the current clue from the session if it already exists
+        random_element = request.session['current_clue']
 
     if request.method == 'POST':
+        # Increment the count regardless of whether they skip or submit a code
+        count += 1
+
         # Handle Skip Clue
         if request.POST.get('skip') == 'true':
-            # Mark the current assignment as used
-            if active_assignment:
-                active_assignment.used = True
-                active_assignment.save()
-
-            # Now assign the next clue
-            used_lists = UserTextAssignment.objects.filter(user=user, used=True)
-            used_list_ids = [list_item.assigned_list for list_item in used_lists]
-
-            available_lists = [lst for lst in main_list if lst not in used_list_ids]
-            if not available_lists:
-                # No more lists available
+            # Skip the current clue and assign the next one
+            request.session.pop('current_clue', None)  # Remove the current clue from session
+            
+            # If the user has seen 10 clues, show the completion page
+            if count >= 11:
                 return render(request, 'completed.html')
 
-            # Shuffle and assign the next clue
-            shuffled_list = random.choice(available_lists)
-            random.shuffle(shuffled_list)
-            assigned_value = shuffled_list[0]
-
-            # Save the new assignment in the database
-            new_assignment = UserTextAssignment(user=user, assigned_list=shuffled_list, assigned_text=assigned_value, used=False)
-            new_assignment.save()
-
-            return render(request, 'actual_clue.html', {'assigned_text': assigned_value})
+            return redirect('next_clue')
 
         # Handle normal treasure code submission
         treasure_code = request.POST.get('TCode')
-        print("tcode",treasure_code)
-        correct_code = 'qwerty'  # Replace with your correct treasure code
-
-        # Validate the treasure code
         if treasure_code == correct_code:
-            # Mark the current assignment as used
-            if active_assignment:
-                active_assignment.used = True
-                active_assignment.save()
-
-            # Now assign the next clue
-            used_lists = UserTextAssignment.objects.filter(user=user, used=True)
-            used_list_ids = [list_item.assigned_list for list_item in used_lists]
-
-            available_lists = [lst for lst in main_list if lst not in used_list_ids]
-            if not available_lists:
-                # No more lists available
-                return render(request, 'completed.html')
-
-            # Shuffle and assign the next clue
-            shuffled_list = random.choice(available_lists)
-            random.shuffle(shuffled_list)
-            assigned_value = shuffled_list[0]
-
-            # Save the new assignment in the database
-            new_assignment = UserTextAssignment(user=user, assigned_list=shuffled_list, assigned_text=assigned_value, used=False)
-            new_assignment.save()
-
+            # Correct treasure code, move to the next clue
             points += 1
-            profile, created = Profile.objects.get_or_create(user=request.user)
+
+            # Update user's points in the profile model
+            profile, created = Profile.objects.get_or_create(user=user)
             profile.clue_solved = points
             profile.save()
 
-            if points > 10:
-                profile = Profile.objects.get(user=request.user)
-                profile.clue_solved = 0
-                profile.save()
+            # If the user has seen 10 clues, show the completion page
+            if count >= 11:
+                recorded_time = Finish.objects.create(user=request.user)
+                recorded_time.timeout = timezone.now()  # Update the timeout field
+                recorded_time.save()
+                return render(request, 'completed.html')
 
-            return render(request, 'actual_clue.html', {'assigned_text': assigned_value})
+            # Get the next clue
+            request.session.pop('current_clue', None)  # Remove the current clue after correct answer
+            return redirect('next_clue')
         elif treasure_code is not None:
-            # Incorrect code, show error and reload the same clue
-            if active_assignment:
-                messages.error(request, 'Incorrect Treasure Code')
-                return render(request, 'actual_clue.html', {'assigned_text': active_assignment.assigned_text})
-            else:
-                messages.error(request, 'No active clue. Please try again.')
-                return redirect('next_clue')
+            # Incorrect treasure code, show error message
+            messages.error(request, 'Incorrect Treasure Code')
+            return render(request, 'actual_clue.html', {'assigned_text': random_element})
 
-    # If there's already an active assignment, display the same clue
-    if active_assignment:
-        return render(request, 'actual_clue.html', {'assigned_text': active_assignment.assigned_text})
-
-    # If there's no active assignment and no POST data, start the first assignment
-    used_lists = UserTextAssignment.objects.filter(user=user, used=True)
-    used_list_ids = [list_item.assigned_list for list_item in used_lists]
-
-    available_lists = [lst for lst in main_list if lst not in used_list_ids]
-    if not available_lists:
-        return redirect('completion')
-
-    # Shuffle and assign the first clue
-    shuffled_list = random.choice(available_lists)
-    random.shuffle(shuffled_list)
-    assigned_value = shuffled_list[0]
-
-    # Save the new assignment
-    new_assignment = UserTextAssignment(user=user, assigned_list=shuffled_list, assigned_text=assigned_value, used=False)
-    new_assignment.save()
-
-    return render(request, 'actual_clue.html', {'assigned_text': assigned_value})
+    # Display the current clue
+    return render(request, 'actual_clue.html', {'assigned_text': random_element})
 
 
-# def completion(request):
-#     global points
-#     profile, created = Profile.objects.get_or_create(user=request.user)
-#     points+=1
-#     profile.clue_solved=points
-#     profile.save()
-#     return render(request, 'completed.html')
 
 
 from django.utils import timezone
